@@ -1,99 +1,54 @@
 # CI/CD Blueprint: RAG Eval + Guardrail Stack
 
-**Sinh viên:** [Họ Tên]  
-**Ngày:** [Ngày làm lab]
+Student: Nguyen Viet Hoang Luong
+Date: 2026-07-01
 
----
+## Guard Stack Pipeline
 
-## Guard Stack Architecture
+| Layer | Tool | Measured P95 | Budget | Failure Action |
+|---|---:|---:|---:|---|
+| PII Detection | Presidio-compatible local recognizers | 0.07 ms | <10 ms | Reject/anonymize and log entity type |
+| Topic/Jailbreak | NeMo-compatible input rail fallback | 0.02 ms | <300 ms | Block with refusal reason |
+| RAG Pipeline | Day 18 hybrid search + rerank + DeepSeek generation | not in guard timer | <2000 ms target | Return fallback answer from retrieved context |
+| Output Check | PII/output safety check | not separately benchmarked | <300 ms | Anonymize PII or replace unsafe answer |
+| Total Guard | PII + input rail | 0.09 ms | <500 ms | Fail closed if guard stack errors |
 
-```
-User Input
-    │
-    ▼ (~?ms P95)
-[Presidio PII Scan]
-    │ block if: VN_CCCD / VN_PHONE / EMAIL detected
-    │ action:   return 400 + "PII detected in query"
-    ▼ (~?ms P95)
-[NeMo Input Rail]
-    │ block if: off-topic / jailbreak / prompt injection
-    │ action:   return 503 + refuse message
-    ▼
-[RAG Pipeline (Day 18)]
-    │ M1 Chunk → M2 Search → M3 Rerank → GPT-4o-mini
-    ▼
-[NeMo Output Rail]
-    │ flag if:  PII in response / sensitive content
-    │ action:   replace with safe response
-    ▼
-User Response
-```
+## CI Gates
 
----
+- RAGAS faithfulness >= 0.75 on the 50-question test set.
+- RAGAS average score should not regress by more than 5 percent from the latest accepted report.
+- Adversarial guard suite pass rate >= 90 percent. Current result: 18/20.
+- Total guard P95 latency < 500 ms. Current result: 0.09 ms.
+- `pytest tests/ -q` must pass before merge.
+- `python check_lab.py` must pass before submission.
 
-## Latency Budget
+## Monitoring
 
-*(Điền từ kết quả Task 12 — measure_p95_latency())*
+| Metric | Current Lab Result | Alert Threshold | Action |
+|---|---:|---:|---|
+| RAGAS avg_score | 0.7004 | <0.65 | Inspect bottom-10 failures and retrieval traces |
+| RAGAS faithfulness | 0.7166 | <0.75 | Tighten context-only prompt and review hallucinated answers |
+| Worst RAGAS metric | answer_relevancy 0.6125 | <0.60 | Improve answer prompt and query decomposition |
+| Dominant failure distribution | factual | factual dominates repeatedly | Audit short factual answers and expected answer format |
+| LLM judge Cohen kappa | 0.5833 | <0.50 | Review judge prompt and human-label mapping |
+| Guard adversarial pass rate | 18/20 | <18/20 | Add new jailbreak/off-topic patterns |
+| Guard total P95 latency | 0.09 ms | >500 ms | Profile slow layer and fail closed |
 
-| Layer | P50 (ms) | P95 (ms) | P99 (ms) | Budget |
-|---|---|---|---|---|
-| Presidio PII | ? | ? | ? | <10ms |
-| NeMo Input Rail | ? | ? | ? | <300ms |
-| RAG Pipeline | ? | ? | ? | <2000ms |
-| NeMo Output Rail | ? | ? | ? | <300ms |
-| **Total Guard** | ? | **?** | ? | **<500ms** |
+## Actual Lab Results
 
-**Budget OK?** [ ] Yes / [ ] No  
-**Comment:** [Nếu vượt budget, layer nào là bottleneck và cách tối ưu?]
+| Item | Result |
+|---|---:|
+| RAGAS total questions | 50 |
+| Factual avg_score | 0.9045 |
+| Multi-hop avg_score | 0.5178 |
+| Adversarial avg_score | 0.6574 |
+| Overall avg_score | 0.7004 |
+| Worst metric | answer_relevancy |
+| Dominant failure distribution | factual |
+| Cohen kappa | 0.5833 |
+| Adversarial pass rate | 18/20 |
+| Guard P95 latency | 0.09 ms |
 
----
+## Notes And Improvements
 
-## CI/CD Gates (phải pass trước khi merge to main)
-
-```yaml
-# .github/workflows/rag_eval.yml
-- name: RAGAS Quality Gate
-  run: python src/phase_a_ragas.py
-  env:
-    MIN_FAITHFULNESS: 0.75
-    MIN_AVG_SCORE: 0.65
-
-- name: Guardrail Gate
-  run: pytest tests/test_phase_c.py -k "test_adversarial_suite_pass_rate"
-  # phải ≥ 15/20 (75%)
-
-- name: Latency Gate
-  run: python -c "from src.phase_c_guard import measure_p95_latency; ..."
-  # P95 total < 500ms
-```
-
----
-
-## Monitoring Dashboard (production)
-
-| Metric | Alert Threshold | Action |
-|---|---|---|
-| RAGAS faithfulness (daily sample) | < 0.70 | Page on-call |
-| Adversarial block rate | < 80% | Review new attack patterns |
-| Guard P95 latency | > 600ms | Scale NeMo model |
-| PII detected count | spike >10/hour | Security alert |
-
----
-
-## Kết quả thực tế từ Lab
-
-| | Kết quả |
-|---|---|
-| RAGAS avg_score (50q) | ? |
-| Worst metric | ? |
-| Dominant failure distribution | ? |
-| Cohen's κ | ? |
-| Adversarial pass rate | ? / 20 |
-| Guard P95 latency | ? ms |
-
----
-
-## Nhận xét & Cải tiến
-
-> [Viết 3-5 câu về: điều gì hoạt động tốt, điều gì cần cải thiện,
->  nếu deploy production thực sự bạn sẽ thay đổi gì trong stack này?]
+The guard stack passes the lab threshold and meets the latency budget because the default path uses local PII and rule-based rail checks. For production, the NeMo LLM rail should be enabled and benchmarked separately because its latency will be much higher than the local fallback. The RAG evaluation shows factual questions score well overall, but the dominant failure metric is answer relevancy, which means some answers are too short or not shaped exactly to the question. The next technical improvement should be answer-format prompting plus multi-hop query decomposition before changing the retrieval stack.

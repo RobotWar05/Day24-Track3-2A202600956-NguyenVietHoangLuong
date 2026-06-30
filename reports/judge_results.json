@@ -1,0 +1,260 @@
+{
+  "total_items": 10,
+  "use_llm": true,
+  "judge_model": "deepseek-chat",
+  "cohen_kappa": 0.5833,
+  "bias_report": {
+    "total_judged": 10,
+    "position_bias_rate": 0.4,
+    "position_bias_count": 4,
+    "verbosity_bias": 0.833,
+    "verbosity_details": {
+      "a_wins_a_longer": 2,
+      "b_wins_b_longer": 3,
+      "total_decisive": 6
+    },
+    "interpretation": "Position bias is high; keep swap-and-average in production."
+  },
+  "items": [
+    {
+      "question_id": 1,
+      "human_label": 1,
+      "judge_label": 1,
+      "result": {
+        "question": "Nhân viên được nghỉ bao nhiêu ngày khi kết hôn?",
+        "answer_a": "Nhân viên được nghỉ 3 ngày làm việc có lương khi kết hôn.",
+        "answer_b": "Chính xác và đầy đủ.",
+        "winner_pass1": "A",
+        "winner_pass2": "A",
+        "final_winner": "A",
+        "reasoning_pass1": "Answer A provides a clear, concise, and correct answer to the question, stating exactly 3 working days off with pay for marriage. Answer B is vague and does not specify the number of days, making it less accurate and complete.",
+        "reasoning_pass2": "Answer B directly and accurately states the correct number of leave days (3 working days with pay) for marriage, while Answer A is vague and non-informative, lacking the specific details requested. Answer B is more complete and concise, providing the exact information needed.",
+        "position_consistent": true,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 5,
+      "human_label": 0,
+      "judge_label": 0,
+      "result": {
+        "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+        "answer_a": "Cần Giám đốc phòng ban phê duyệt.",
+        "answer_b": "Sai — 55 triệu vượt ngưỡng 50 triệu nên phải CEO phê duyệt, không phải Director.",
+        "winner_pass1": "B",
+        "winner_pass2": "B",
+        "final_winner": "B",
+        "reasoning_pass1": "Answer B correctly identifies that the value exceeds 50 million VND and thus requires CEO approval, while Answer A incorrectly states department manager approval. B is more accurate and complete.",
+        "reasoning_pass2": "Answer A is correct: thiết bị 55 triệu vượt ngưỡng 50 triệu, cần CEO phê duyệt. Answer B sai vì chỉ yêu cầu Giám đốc phòng ban, không chính xác.",
+        "position_consistent": true,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 12,
+      "human_label": 1,
+      "judge_label": 1,
+      "result": {
+        "question": "Thưởng Tết tối thiểu cho nhân viên chính thức có từ 6 tháng trở lên là bao nhiêu?",
+        "answer_a": "Nhân viên được thưởng Tết tối thiểu 1 tháng lương.",
+        "answer_b": "Đúng và súc tích.",
+        "winner_pass1": "B",
+        "winner_pass2": "A",
+        "final_winner": "tie",
+        "reasoning_pass1": "Cả hai câu trả lời đều chính xác theo Bộ luật Lao động Việt Nam (Điều 104), nhưng câu trả lời A thiếu phần xác nhận tính đúng đắn. Câu trả lời B ngắn gọn, đầy đủ và trực tiếp hơn.",
+        "reasoning_pass2": "Answer B directly answers the question with a specific amount (1 month salary), which is accurate and concise. Answer A only states that the answer is correct and succinct without providing the actual figure, making it incomplete.",
+        "position_consistent": false,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 21,
+      "human_label": 1,
+      "judge_label": 1,
+      "result": {
+        "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+        "answer_a": "Được nghỉ 18 ngày phép (15 cơ bản + 3 thâm niên). Lương Senior từ 20 đến 35 triệu.",
+        "answer_b": "Tính đúng, bao gồm cả phép và lương.",
+        "winner_pass1": "A",
+        "winner_pass2": "A",
+        "final_winner": "A",
+        "reasoning_pass1": "Answer A is more accurate and complete: it correctly calculates 18 days (15 base + 3 for 9 years seniority) and provides a salary range that reflects common senior engineer pay in Vietnam. Answer B is vague and lacks specific numbers.",
+        "reasoning_pass2": "Answer B provides specific numbers: 18 vacation days (15 base + 3 seniority) and a salary range of 20-35 million VND. Answer A is vague and lacks concrete details, making it less useful.",
+        "position_consistent": true,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 23,
+      "human_label": 1,
+      "judge_label": 1,
+      "result": {
+        "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng. Phải hoàn trả bao nhiêu?",
+        "answer_a": "Hoàn trả 25 triệu vì chưa đủ 1 năm cam kết.",
+        "answer_b": "Đúng — 100% hoàn trả vì nghỉ trước 12 tháng.",
+        "winner_pass1": "B",
+        "winner_pass2": "A",
+        "final_winner": "tie",
+        "reasoning_pass1": "Answer B explicitly states the policy that full refund is required if leaving before 12 months, matching typical contract terms. Answer A assumes 1 year but lacks specificity and justification.",
+        "reasoning_pass2": "Both answers indicate full repayment, but Answer B provides a more complete and specific explanation by mentioning the exact amount (25 million) and the reason (chưa đủ 1 năm cam kết), rather than Answer A's general statement. Thus B is better in completeness while both are accurate and concise.",
+        "position_consistent": false,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 29,
+      "human_label": 0,
+      "judge_label": 0,
+      "result": {
+        "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày. Ai phê duyệt và phí phạt là bao nhiêu?",
+        "answer_a": "Trưởng phòng phê duyệt. Phạt 2% tháng trên 8 triệu.",
+        "answer_b": "Thiếu — 8 triệu cần cả Kế toán trưởng. Phạt phải tính pro-rata cho 15 ngày quá hạn = 80.000 VNĐ.",
+        "winner_pass1": "B",
+        "winner_pass2": "B",
+        "final_winner": "B",
+        "reasoning_pass1": "Answer B correctly identifies that an 8 million VND advance requires approval from both the department head and chief accountant, provides a more accurate penalty calculation by applying prorated days (15 days overdue = 80,000 VND based on 2% monthly rate), while Answer A incorrectly states only department head approval and miscalculates the penalty as a flat 2% on 8 million. Answer B thus demonstrates higher accuracy and completeness.",
+        "reasoning_pass2": "Answer A is more accurate and complete: it correctly identifies the required approver (Kế toán trưởng) and calculates a specific penalty (pro-rata for 15 days overdue = 80,000 VND). Answer B is incomplete and inaccurate: it only mentions Trưởng phòng as approver (insufficient) and states a vague penalty rate without calculating the actual amount or addressing the 30-day overdue condition.",
+        "position_consistent": true,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 33,
+      "human_label": 1,
+      "judge_label": 1,
+      "result": {
+        "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm?",
+        "answer_a": "Phép: 19 ngày. Phụ cấp: 1.500.000 VNĐ/tháng.",
+        "answer_b": "Tính đúng cả hai.",
+        "winner_pass1": "B",
+        "winner_pass2": "A",
+        "final_winner": "tie",
+        "reasoning_pass1": "Answer A provides a specific but incorrect number of days (19 days) and a monthly allowance of 1,500,000 VND without confirming accuracy. Answer B correctly indicates that both parts are calculated correctly (presumably based on the context), which aligns with completeness and accuracy. Answer A is concise but inaccurate; Answer B is more accurate and complete.",
+        "reasoning_pass2": "Answer B provides specific numbers for both components (19 days leave, 1,500,000 VND/month allowance), while Answer A only states 'calculate both correctly' without providing any actual figures. Thus B is more complete and accurate.",
+        "position_consistent": false,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 41,
+      "human_label": 0,
+      "judge_label": 1,
+      "result": {
+        "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+        "answer_a": "Nhân viên được nghỉ 12 ngày phép năm.",
+        "answer_b": "Sai — trả lời theo v2023 đã hết hiệu lực. v2024 hiện hành là 15 ngày.",
+        "winner_pass1": "B",
+        "winner_pass2": "A",
+        "final_winner": "tie",
+        "reasoning_pass1": "Answer B provides the correct current policy (15 days for 2024) while Answer A incorrectly states 12 days, which is outdated.",
+        "reasoning_pass2": "The current regulations (2024) specify 15 days, but answer A incorrectly states the answer based on 2023 rules. Answer B gives a specific number but is also inaccurate for 2024. However, since the question is about current rules and answer A is explicitly wrong, answer B is less wrong despite being incomplete. But by strict accuracy, both are incorrect. However, answer B at least provides a number without claiming it's the current rules, while answer A falsely marks itself as correct. Given the options, answer B is the better choice for providing a specific answer, though it's still not fully accurate. The scoring reflects that answer A is completely wrong, while answer B is partially correct (12 days was the old rule, but the new rule is 15). Actually, from 2024, the minimum is 15 days for normal conditions. So answer B is also incorrect. The judge must pick the lesser evil. I will rank B higher for providing a direct number without misleading commentary.",
+        "position_consistent": false,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 46,
+      "human_label": 1,
+      "judge_label": 0,
+      "result": {
+        "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+        "answer_a": "Nhân viên thử việc không được nghỉ phép năm và phải xin nghỉ không lương nếu cần.",
+        "answer_b": "Đúng hoàn toàn, bao gồm hành động thay thế.",
+        "winner_pass1": "B",
+        "winner_pass2": "B",
+        "final_winner": "B",
+        "reasoning_pass1": "Answer A is incorrect because it states that probationary employees are not entitled to annual leave, which is false according to Vietnamese labor law. Answer B correctly notes that they are entitled and mentions replacement actions (haft meaning unclear but contextually better). However, both answers have issues; B is chosen as it acknowledges entitlement, though it is incomplete.",
+        "reasoning_pass2": "Answer A is more accurate and complete: it correctly states the rule and includes the exception (compensatory leave). Answer B is incomplete because it misses the exception. Both are concise, but A wins on accuracy and completeness.",
+        "position_consistent": true,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    },
+    {
+      "question_id": 50,
+      "human_label": 0,
+      "judge_label": 0,
+      "result": {
+        "question": "Nhân viên Manager có thể dùng VPN cá nhân (NordVPN) khi WFH không?",
+        "answer_a": "Được, miễn là đảm bảo kết nối an toàn.",
+        "answer_b": "Sai — VPN cá nhân bị cấm theo chính sách VPN v1.3. Phải dùng VPN WireGuard của công ty.",
+        "winner_pass1": "B",
+        "winner_pass2": "B",
+        "final_winner": "B",
+        "reasoning_pass1": "Answer A is inaccurate because it allows personal VPNs, which are prohibited. Answer B correctly states the policy and specifies the required corporate VPN, making it more accurate, complete, and concise.",
+        "reasoning_pass2": "Answer A correctly states the policy violation, is concise, and provides the required solution. Answer B incorrectly suggests personal VPN is allowed, which is inaccurate.",
+        "position_consistent": true,
+        "scores_pass1": {
+          "A": 0.0,
+          "B": 0.0
+        },
+        "scores_pass2": {
+          "A": 0.0,
+          "B": 0.0
+        }
+      }
+    }
+  ]
+}

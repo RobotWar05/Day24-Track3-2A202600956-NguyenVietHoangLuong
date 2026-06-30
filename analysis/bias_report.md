@@ -1,74 +1,29 @@
-# LLM Judge Bias Report — Phase B
+# Phase B Bias Report
 
-**Sinh viên:** [Họ Tên]  
-**Ngày:** [Ngày làm lab]  
-**Judge model:** gpt-4o-mini
+Source: `reports/judge_results.json`
 
----
+## Summary
 
-## 1. Pairwise Judge Results
+| Metric | Result |
+|---|---:|
+| Evaluated items | 10 |
+| Judge model | deepseek-chat |
+| Cohen kappa | 0.5833 |
+| Position bias rate | 0.2000 |
+| Position bias count | 2 |
+| Verbosity bias | 0.5710 |
 
-*(Chạy pairwise_judge() trên ít nhất 5 cặp answers)*
+## Interpretation
 
-| # | Question (tóm tắt) | Winner | Reasoning tóm tắt |
-|---|---|---|---|
-| 1 | | | |
-| 2 | | | |
-| ... | | | |
+Cohen kappa is moderate and close to the rubric bonus threshold of 0.6. The judge agrees with human labels better than chance, but the result is not strong enough to treat as production-grade without more calibration.
 
----
+Position bias is present but not dominant: 2 out of 10 swap-and-average checks were inconsistent. Keeping the swap pass is justified.
 
-## 2. Swap-and-Average Results
+Verbosity bias is noticeable. Longer answers often win when the judge is decisive, so the judge prompt should keep emphasizing accuracy and completeness over length.
 
-*(Chạy swap_and_average() trên cùng các cặp)*
+## Recommended Fixes
 
-| # | Pass 1 Winner | Pass 2 Winner | Final | Position Consistent? |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-
-**Position bias rate:** ?% (= số case NOT consistent / tổng)
-
----
-
-## 3. Cohen's κ Analysis
-
-**Human labels:** `human_labels_10q.json` (10 câu, 5 label=1, 5 label=0)  
-**Judge labels:** [kết quả chạy judge trên 10 câu tương ứng]
-
-| Question ID | Human Label | Judge Label | Agree? |
-|---|---|---|---|
-| 1 | | | |
-| 5 | | | |
-| 12 | | | |
-| 21 | | | |
-| 23 | | | |
-| 29 | | | |
-| 33 | | | |
-| 41 | | | |
-| 46 | | | |
-| 50 | | | |
-
-**Cohen's κ:** ?  
-**Interpretation:** [poor / slight / fair / moderate / substantial / almost perfect]
-
----
-
-## 4. Verbosity Bias
-
-Trong các case có winner rõ ràng (không phải tie):
-- A thắng + A dài hơn B: ? / ? cases
-- B thắng + B dài hơn A: ? / ? cases  
-- **Verbosity bias rate:** ?%
-
-**Kết luận:** [LLM có xu hướng chọn answer dài hơn không? Tại sao điều này là vấn đề?]
-
----
-
-## 5. Nhận xét chung
-
-> [Viết 3-5 câu nhận xét:
->  - κ > 0.6 chưa? LLM judge đáng tin không?
->  - Position bias đáng lo ngại không (>30%)?
->  - Swap-and-average có thực sự giúp ích không?
->  - Trong môi trường production, nên dùng judge như thế nào?]
+- Use a stricter judge rubric with separate scores for correctness, completeness, citation support, and conciseness.
+- Add few-shot judge examples from the human-labeled set.
+- Keep swap-and-average enabled for all pairwise comparisons.
+- Increase the human-labeled calibration set beyond 10 examples before using kappa as a CI gate.

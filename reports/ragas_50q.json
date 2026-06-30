@@ -1,0 +1,158 @@
+{
+  "total_questions": 50,
+  "per_distribution": {
+    "factual": {
+      "count": 20,
+      "faithfulness": 0.8916666666666668,
+      "answer_relevancy": 0.9263566424169779,
+      "context_precision": 0.8999999999216666,
+      "context_recall": 0.9,
+      "avg_score": 0.904505827251328
+    },
+    "multi_hop": {
+      "count": 20,
+      "faithfulness": 0.5687103174603175,
+      "answer_relevancy": 0.35261225520769435,
+      "context_precision": 0.4666666666225,
+      "context_recall": 0.6833333333333333,
+      "avg_score": 0.5178306431559613
+    },
+    "adversarial": {
+      "count": 10,
+      "faithfulness": 0.6416666666666667,
+      "answer_relevancy": 0.5044595410851341,
+      "context_precision": 0.8333333332641667,
+      "context_recall": 0.6500000000000001,
+      "avg_score": 0.6573648852539918
+    }
+  },
+  "failure_clusters": {
+    "matrix": {
+      "faithfulness": {
+        "factual": 3,
+        "multi_hop": 6,
+        "adversarial": 3
+      },
+      "answer_relevancy": {
+        "factual": 10,
+        "multi_hop": 9,
+        "adversarial": 2
+      },
+      "context_precision": {
+        "factual": 3,
+        "multi_hop": 5,
+        "adversarial": 2
+      },
+      "context_recall": {
+        "factual": 4,
+        "multi_hop": 0,
+        "adversarial": 3
+      }
+    },
+    "dominant_failure_distribution": "factual",
+    "dominant_failure_metric": "answer_relevancy",
+    "insight": "Dominant failure is answer_relevancy in factual. Recommended next fix: Improve prompt template."
+  },
+  "bottom_10": [
+    {
+      "rank": 1,
+      "question_id": 21,
+      "distribution": "multi_hop",
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "avg_score": 0.125,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 2,
+      "question_id": 29,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 8 triệu, chưa thanh toán sau 30 ngày (quá hạn 15 ngày). Ai phê duyệt khoản này và phí phạt là bao nhiêu?",
+      "avg_score": 0.1667,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 3,
+      "question_id": 39,
+      "distribution": "multi_hop",
+      "question": "So sánh yêu cầu mật khẩu giữa policy v1.0 và v2.0 về độ dài tối thiểu, thời hạn đổi và MFA.",
+      "avg_score": 0.2188,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer does not match question",
+      "suggested_fix": "Improve prompt template"
+    },
+    {
+      "rank": 4,
+      "question_id": 37,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tự ý xóa malware khỏi máy và chia sẻ thông tin sự cố này trên Slack nội bộ. Vi phạm những chính sách nào cụ thể?",
+      "avg_score": 0.3125,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer does not match question",
+      "suggested_fix": "Improve prompt template"
+    },
+    {
+      "rank": 5,
+      "question_id": 24,
+      "distribution": "multi_hop",
+      "question": "Nhân viên tạm ứng 15 triệu, sau 20 ngày mới thanh toán. Bị phạt bao nhiêu?",
+      "avg_score": 0.3611,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer does not match question",
+      "suggested_fix": "Improve prompt template"
+    },
+    {
+      "rank": 6,
+      "question_id": 32,
+      "distribution": "multi_hop",
+      "question": "Nhân viên mới đang trong tháng thứ 3 thử việc có BẮT BUỘC tham dự buổi đào tạo nội bộ của phòng ban không? Tại sao?",
+      "avg_score": 0.375,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 7,
+      "question_id": 50,
+      "distribution": "adversarial",
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (như NordVPN) khi WFH để tăng bảo mật thêm không?",
+      "avg_score": 0.375,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 8,
+      "question_id": 33,
+      "distribution": "multi_hop",
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm theo v2024 là bao nhiêu?",
+      "avg_score": 0.375,
+      "worst_metric": "answer_relevancy",
+      "diagnosis": "Answer does not match question",
+      "suggested_fix": "Improve prompt template"
+    },
+    {
+      "rank": 9,
+      "question_id": 48,
+      "distribution": "adversarial",
+      "question": "Nhân viên thử việc có được hưởng bảo hiểm sức khỏe PVI không?",
+      "avg_score": 0.4167,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    },
+    {
+      "rank": 10,
+      "question_id": 47,
+      "distribution": "adversarial",
+      "question": "Khi phát hiện malware trên máy tính công ty, nhân viên có nên tự xử lý không?",
+      "avg_score": 0.4167,
+      "worst_metric": "faithfulness",
+      "diagnosis": "LLM hallucinating",
+      "suggested_fix": "Tighten system prompt, lower temperature"
+    }
+  ]
+}

@@ -1,70 +1,32 @@
-# Failure Cluster Analysis — Phase A
+# Phase A Failure Cluster Analysis
 
-**Sinh viên:** [Họ Tên]  
-**Ngày:** [Ngày làm lab]
+Source: `reports/ragas_50q.json`
 
----
+## Summary
 
-## 1. Aggregate RAGAS Scores theo Distribution
+| Distribution | Count | Avg Score | Faithfulness | Answer Relevancy | Context Precision | Context Recall |
+|---|---:|---:|---:|---:|---:|---:|
+| factual | 20 | 0.9045 | 0.8917 | 0.9264 | 0.9000 | 0.9000 |
+| multi_hop | 20 | 0.5178 | 0.5687 | 0.3526 | 0.4667 | 0.6833 |
+| adversarial | 10 | 0.6574 | 0.6417 | 0.5045 | 0.8333 | 0.6500 |
 
-| Metric | factual | multi_hop | adversarial |
-|---|---|---|---|
-| faithfulness | ? | ? | ? |
-| answer_relevancy | ? | ? | ? |
-| context_precision | ? | ? | ? |
-| context_recall | ? | ? | ? |
-| **avg_score** | ? | ? | ? |
+Overall avg_score: 0.7004.
 
----
+## Dominant Failure
 
-## 2. Bottom 10 Questions
+Dominant failure metric: `answer_relevancy`.
 
-| Rank | Distribution | Question | avg_score | worst_metric |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| ... | | | | |
+Dominant failure distribution from the generated cluster matrix: `factual`.
 
----
+Interpretation: the pipeline usually retrieves useful factual context, but several answers are too short or not aligned enough with the exact question wording. Multi-hop remains the weakest distribution by average score, which is expected because it requires combining documents and doing calculations.
 
-## 3. Failure Cluster Matrix
+## Bottom Failure Pattern
 
-*(Mỗi ô = số câu có worst_metric = row, thuộc distribution = col)*
+The bottom-10 list is led by multi-hop questions such as senior leave/salary and advance-payment penalty cases. These require both retrieval and arithmetic or policy version selection. When the answer is brief, RAGAS may mark relevancy or faithfulness low even if part of the retrieved context is correct.
 
-| worst_metric | factual | multi_hop | adversarial | Total |
-|---|---|---|---|---|
-| faithfulness | | | | |
-| answer_relevancy | | | | |
-| context_precision | | | | |
-| context_recall | | | | |
+## Recommended Fixes
 
----
-
-## 4. Dominant Failure Analysis
-
-**Dominant distribution:** [factual / multi_hop / adversarial]  
-**Dominant metric:** [faithfulness / answer_relevancy / context_precision / context_recall]
-
-**Lý do phân tích:**
-
-> [Viết 3-5 câu giải thích tại sao distribution này hay bị failure, 
->  tại sao metric này thấp nhất trong corpus HR policy tiếng Việt]
-
----
-
-## 5. Suggested Fixes
-
-| Metric yếu | Root cause | Suggested fix |
-|---|---|---|
-| faithfulness | LLM hallucinating | |
-| context_recall | Missing relevant chunks | |
-| context_precision | Too many irrelevant chunks | |
-| answer_relevancy | Answer doesn't match question | |
-
----
-
-## 6. Nhận xét về Adversarial Distribution
-
-> [So sánh avg_score của adversarial vs factual vs multi_hop.
->  Pipeline có bị "nhầm" bởi version conflicts (v2023 vs v2024) không?
->  Câu nào trong bottom 10 rơi vào adversarial? Tại sao?]
+- Improve the generation prompt to force direct answer format: final number, approval role, policy version, and short reason.
+- For multi-hop questions, retrieve more candidate chunks before reranking and include parent context.
+- Add a post-generation verifier for arithmetic questions.
+- Keep version markers such as v2024/current policy in metadata and boost current-policy chunks.
