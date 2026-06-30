@@ -34,10 +34,10 @@ RERANK_TOP_K = 3
 
 # --- Paths ---
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-TEST_SET_PATH = os.path.join(os.path.dirname(__file__), "test_set_50q.json")
-ANSWERS_PATH = os.path.join(os.path.dirname(__file__), "answers_50q.json")
-HUMAN_LABELS_PATH = os.path.join(os.path.dirname(__file__), "human_labels_10q.json")
-ADVERSARIAL_SET_PATH = os.path.join(os.path.dirname(__file__), "adversarial_set_20.json")
+TEST_SET_PATH = os.path.join(os.path.dirname(__file__), "datasets", "test_set_50q.json")
+ANSWERS_PATH = os.path.join(os.path.dirname(__file__), "datasets", "answers_50q.json")
+HUMAN_LABELS_PATH = os.path.join(os.path.dirname(__file__), "datasets", "human_labels_10q.json")
+ADVERSARIAL_SET_PATH = os.path.join(os.path.dirname(__file__), "datasets", "adversarial_set_20.json")
 GUARDRAILS_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "guardrails")
 
 # --- LLM Judge ---
